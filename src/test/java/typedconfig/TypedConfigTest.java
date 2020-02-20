@@ -1,21 +1,16 @@
 package typedconfig;
 
 import java.util.Properties;
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
-import lombok.RequiredArgsConstructor;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
-
+import typedconfig.completime.IntRange;
 import static org.testng.Assert.*;
-
 
 public class TypedConfigTest {
   @BeforeClass
   public void setup() {
   }
-
   @AfterClass
   public void tearDown() {
   }
@@ -72,14 +67,6 @@ public class TypedConfigTest {
     assertEquals(config.port, 88, "fail");
   }
 
-  @Test
-  public void testIntRange() {
-    Properties prop = new Properties();
-    prop.put("test.port_number", "111111");
-    Config config = new Config(prop);
-    assertEquals(config.port, 999, "fail");
-  }
-
 }
 
 enum DbType {
@@ -90,7 +77,6 @@ class Config extends TypedConfig {
   public Config(Properties prop) {
     super(prop);
   }
-
   @Key("test.dbType")
   public DbType dbType;
   @Key("test.url")
