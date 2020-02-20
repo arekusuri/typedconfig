@@ -10,10 +10,12 @@ public class TypedConfig {
   public TypedConfig(Properties prop) {
     for (Field field : this.getClass().getDeclaredFields()) {
       if (field.getAnnotations().length == 0) continue;
+      Object defaultValue = pickupDefaultValue(field); // get default value which is in config class
       Object configValue = pickupValueByKey(field, prop); // get ini file config value by key
       if (configValue == null) configValue = pickupValueByAlias(field, prop); // by alias (2nd key)
-      if (configValue == null) configValue = pickupDefaultValue(field); // get default value which is in config class
+      if (configValue == null) configValue = defaultValue;
       if (configValue == null) continue;
+      configValue = ConstraintUtil.constraint(field, configValue, defaultValue);
       field.set(this, convert(configValue, field.getType()));
     }
   }
@@ -61,8 +63,9 @@ public class TypedConfig {
       if (keyAnn == null) continue;
       Object configValue = field.get(this);
       if (configValue == null) continue;
-      prop.put(keyAnn.value(), configValue);
+      prop.put(keyAnn.value(), configValue.toString());
     }
     return prop;
   }
 }
+
