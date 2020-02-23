@@ -1,15 +1,17 @@
 package typedconfig;
 
+import java.util.Date;
 import java.util.Properties;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
-import typedconfig.completime.EnumOptions;
-import typedconfig.completime.IntRange;
-import typedconfig.completime.LongRange;
-import typedconfig.completime.StringRegex;
+import typedconfig.compiletime.EnumOptions;
+import typedconfig.compiletime.IntRange;
+import typedconfig.compiletime.LongRange;
+import typedconfig.compiletime.StringRegex;
 
 import static org.testng.Assert.*;
+
 
 public class TypedConfigTest {
   @BeforeClass
@@ -123,6 +125,22 @@ public class TypedConfigTest {
     Config config = new Config(prop);
     assertEquals(config.enumOps, null, "fail");
   }
+  @Test
+  public void testDate() {
+    Properties prop = new Properties();
+    prop.put("test.date", "20200101");
+    Date expectedDate = new Date(120, 0, 1); // 1/1/2020
+    Config config = new Config(prop);
+    assertTrue(config.date.equals(expectedDate), "fail");
+  }
+  @Test
+  public void testDateWithDash() {
+    Properties prop = new Properties();
+    prop.put("test.date", "2020-01-01");
+    Date expectedDate = new Date(120, 0, 1); // 1/1/2020
+    Config config = new Config(prop);
+    assertTrue(config.date.equals(expectedDate), "fail");
+  }
 
 }
 
@@ -137,7 +155,7 @@ class Config extends TypedConfig {
   }
   @Key("test.dbType")
   public DbType dbType;
-  @Key("test.enumOps")@EnumOptions({"sqlserver", "mysql"})
+  @Key("test.enumOps")@EnumOptions({"mysql", "sqlserver"})
   public DbType enumOps;
   @Key("test.url")
   public String url;
@@ -148,4 +166,6 @@ class Config extends TypedConfig {
   @Key("test.stringRegex")@StringRegex("jdbc:mysql:.*:[1-9][0-9]*/tablename")
   public String stringRegex;
 
+  @Key("test.date")
+  public Date date;
 }
