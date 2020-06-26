@@ -8,3 +8,8 @@
  */
 
 rootProject.name = 'typedconfig'
+
+include "typedconfig-core"
+include "typedconfig-sample-2level-mw"
+include "typedconfig-sample-2level-testapp"
+include "typedconfig-sample-1level-testapp"
