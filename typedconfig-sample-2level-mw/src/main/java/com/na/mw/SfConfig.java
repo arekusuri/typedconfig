@@ -4,9 +4,9 @@ import java.util.Properties;
 import typedconfig.Alias;
 import typedconfig.Key;
 import typedconfig.TypedConfig;
-import typedconfig.constraints.EnumMustSetup;
-import typedconfig.constraints.IntMustSetup;
-import typedconfig.constraints.IntOptionalSetup;
+import typedconfig.constraints.EnumRequired;
+import typedconfig.constraints.IntRequired;
+import typedconfig.constraints.IntOptional;
 
 
 public class SfConfig extends TypedConfig {
@@ -18,16 +18,18 @@ public class SfConfig extends TypedConfig {
     PK_CHUNKING,
     CLIENT
   }
+
   @Key("sf.partition.mode")
-  @EnumMustSetup(options = {"PK_CHUNKING", "CLIENT"})
+  @EnumRequired(options = {"PK_CHUNKING", "CLIENT"})
   public boolean mode;
 
   @Key("sf.partition.pkChunkingSize")
-  @IntMustSetup(from=20_000, to=250_000, dependKey = "sf.partition.mode", equalEnum = "PK_CHUNKING")
+  @IntRequired(from=20_000, to=250_000, dependKey = "sf.partition.mode", equalEnum = "PK_CHUNKING")
   public int pkChunkingSize;
 
   @Key("sf.fetchRetryLimit")@Alias("salesforce.fetchRetryLimit")
-  @IntOptionalSetup(defaultValue = 5, dependKey = "sf.partition.mode")
+  @IntOptional(defaultValue = 5, dependKey = "sf.partition.mode")
+  @IntOptional(defaultValue = 5, dependKey = "sf.partition.mode")
   public int fetchRetryLimit;
 
 

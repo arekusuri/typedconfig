@@ -25,9 +25,9 @@ import java.lang.annotation.Target;
 
 @Target({ElementType.FIELD})
 @Retention(RetentionPolicy.RUNTIME)
-public @interface StringOptionalSetup {
-  String regex() default ".*";
-  String defaultValue() default "";
+public @interface IntRequired {
+  int from() default 0;
+  int to() default 0;
   String dependKey() default "";
   String equalEnum() default "";
 }

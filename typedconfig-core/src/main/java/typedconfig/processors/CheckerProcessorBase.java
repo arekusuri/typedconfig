@@ -20,7 +20,7 @@ abstract public class CheckerProcessorBase extends AbstractProcessor {
       return false;
     }
     Set<? extends Element> elementSet = env.getElementsAnnotatedWith(PropertyFileCheck.class);
-    Element annotatedElement = (Element) new ArrayList(elementSet).iterator().next();
+    Element annotatedElement = elementSet.iterator().next();
 
     AnnotationMirror annotationMirror = annotatedElement.getAnnotationMirrors().iterator().next();
     String annotationName = annotationMirror.getAnnotationType().toString();
@@ -28,9 +28,12 @@ abstract public class CheckerProcessorBase extends AbstractProcessor {
     String propertyPathfile = getPropertyPathfile(annotationMirror.getElementValues());
 
     System.out.println(annotationName + values.toString());
-    System.out.println(propertyPathfile);
     String infoFile = getAnnotationInfoFile();
+
+    System.out.println("------ test ----");
+    System.out.println(propertyPathfile);
     System.out.println(infoFile);
+    System.out.println("------ test ----");
 
     return true;
   }
