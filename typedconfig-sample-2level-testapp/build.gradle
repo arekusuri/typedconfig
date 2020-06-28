@@ -21,9 +21,14 @@ repositories {
     mavenCentral()
 }
 
+tasks.named("compileJava") { // once job file changed, recompile all java in this project
+    inputs.files(fileTree(dir: 'config').matching { include '*' })
+}
+
 sourceCompatibility = 1.8
 
 dependencies {
+    sourceSets { main.resources.srcDirs = ['config'] } // tell the config dir is resource
     compile project(":typedconfig-core")
     compile project(":typedconfig-sample-2level-mw")
     annotationProcessor project(':typedconfig-sample-2level-mw')
