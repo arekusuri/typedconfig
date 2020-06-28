@@ -26,12 +26,10 @@ import java.lang.annotation.Target;
 
 @Target({ElementType.FIELD})
 @Retention(RetentionPolicy.RUNTIME)
-@Repeatable(IntOptionalContainer.class)
-public @interface IntOptional {
-  int from() default 0;
-  int to() default 0;
-  int defaultValue() default 0;
-  String dependKey() default "";
-  String equalEnum() default "";
+@Repeatable(StringOptionalConfigContainer.class)
+public @interface StringOptionalConfig {
+  String ifParentValueIs() default "";
+  String defaultValue() default "";
+  String regex() default ".*";
 }
 

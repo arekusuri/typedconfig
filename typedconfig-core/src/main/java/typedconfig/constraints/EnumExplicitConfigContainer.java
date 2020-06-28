@@ -27,7 +27,7 @@ import org.checkerframework.framework.qual.InheritedAnnotation;
 @Target({ElementType.FIELD})
 @Retention(RetentionPolicy.RUNTIME)
 @InheritedAnnotation
-public @interface EnumRequiredContainer {
-  EnumRequired[] value();
+public @interface EnumExplicitConfigContainer {
+  EnumExplicitConfig[] value();
 }
 

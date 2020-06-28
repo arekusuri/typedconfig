@@ -2,11 +2,12 @@ package com.na.mw;
 
 import java.util.Properties;
 import typedconfig.Alias;
+import typedconfig.Parent;
 import typedconfig.Key;
 import typedconfig.TypedConfig;
-import typedconfig.constraints.EnumRequired;
-import typedconfig.constraints.IntRequired;
-import typedconfig.constraints.IntOptional;
+import typedconfig.constraints.EnumExplicitConfig;
+import typedconfig.constraints.IntExplicitConfig;
+import typedconfig.constraints.IntOptionalConfig;
 
 
 public class SfConfig extends TypedConfig {
@@ -20,16 +21,15 @@ public class SfConfig extends TypedConfig {
   }
 
   @Key("sf.partition.mode")
-  @EnumRequired(options = {"PK_CHUNKING", "CLIENT"})
+  @EnumExplicitConfig(options = {"PK_CHUNKING", "CLIENT"})
   public boolean mode;
 
-  @Key("sf.partition.pkChunkingSize")
-  @IntRequired(from=20_000, to=250_000, dependKey = "sf.partition.mode", equalEnum = "PK_CHUNKING")
+  @Key("sf.partition.pkChunkingSize")@Parent("sf.partition.mode")
+  @IntExplicitConfig(from=20_000, to=250_000, ifParentValueIs = "PK_CHUNKING")
   public int pkChunkingSize;
 
-  @Key("sf.fetchRetryLimit")@Alias("salesforce.fetchRetryLimit")
-  @IntOptional(defaultValue = 5, dependKey = "sf.partition.mode")
-  @IntOptional(defaultValue = 5, dependKey = "sf.partition.mode")
+  @Key("sf.fetchRetryLimit")@Alias("salesforce.fetchRetryLimit")@Parent("sf.partition.mode")
+  @IntOptionalConfig(from=1, to=10, defaultValue = 5)
   public int fetchRetryLimit;
 
 

@@ -18,6 +18,7 @@
 package typedconfig.constraints;
 
 import java.lang.annotation.ElementType;
+import java.lang.annotation.Repeatable;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
@@ -25,10 +26,9 @@ import java.lang.annotation.Target;
 
 @Target({ElementType.FIELD})
 @Retention(RetentionPolicy.RUNTIME)
-public @interface StringOptional {
-  String regex() default ".*";
-  String defaultValue() default "";
-  String dependKey() default "";
-  String equalEnum() default "";
+@Repeatable(EnumExplicitConfigContainer.class)
+public @interface EnumExplicitConfig {
+  String ifParentValueIs() default "";
+  String[] options();
 }
 

@@ -28,6 +28,6 @@ import org.checkerframework.framework.qual.InheritedAnnotation;
 @Retention(RetentionPolicy.RUNTIME)
 @InheritedAnnotation
 public @interface EnumOptionalContainer {
-  EnumOptional[] value();
+  EnumOptionalConfig[] value();
 }
 
