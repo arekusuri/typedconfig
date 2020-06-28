@@ -15,19 +15,20 @@
  * limitations under the License.
  */
 
-package typedconfig.constraints;
+package typedconfig.constraints.annotationcontainers;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 import org.checkerframework.framework.qual.InheritedAnnotation;
+import typedconfig.constraints.IntExplicitConfig;
 
 
 @Target({ElementType.FIELD})
 @Retention(RetentionPolicy.RUNTIME)
 @InheritedAnnotation
-public @interface IntOptionalConfigContainer {
-  IntOptionalConfig[] value();
+public @interface IntExplicitConfigContainer {
+  IntExplicitConfig[] value();
 }
 
