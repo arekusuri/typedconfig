@@ -24,14 +24,13 @@ public class SfConfig extends TypedConfig {
   @EnumExplicitConfig(options = {"PK_CHUNKING", "CLIENT"})
   public boolean mode;
 
-  @Key("sf.partition.pkChunkingSize")@Parent("sf.partition.mode")
+  @Key("sf.partition.pkChunkingSize")@Alias("abc")@Parent("sf.partition.mode")
   @IntExplicitConfig(from=20_000, to=250_000, ifParentValueIs = "PK_CHUNKING")
+  @IntExplicitConfig(from=20_000, to=250_000, ifParentValueIs = "CLIENT")
   public int pkChunkingSize;
 
   @Key("sf.fetchRetryLimit")@Alias("salesforce.fetchRetryLimit")@Parent("sf.partition.mode")
   @IntOptionalConfig(from=1, to=10, defaultValue = 5)
   public int fetchRetryLimit;
-
-
 
 }

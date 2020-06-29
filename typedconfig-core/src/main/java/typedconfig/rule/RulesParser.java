@@ -67,13 +67,13 @@ public class RulesParser {
     }
     switch (annType) {
       case "IntExplicitConfig": case "IntOptionalConfig":
-        node.validate = intConfig(rule);
+        node.validates.add(intConfig(rule));
         break;
       case "StringExplicitConfig": case "StringOptionalConfig":
-        node.validate = stringConfig(rule);
+        node.validates.add(stringConfig(rule));
         break;
       case "EnumExplicitConfig": case "EnumOptionalConfig":
-        node.validate = enumConfig(rule);
+        node.validates.add(enumConfig(rule));
         break;
       default:
         return;
@@ -82,17 +82,17 @@ public class RulesParser {
 
   private static Validate intConfig(String rule) {
     // @typedconfig.constraints.IntOptionalConfig(defaultValue=5)
-    String fromStr = pickup(rule, ".*from\\(\\)=([0-9]+),.*");
+    String fromStr = pickup(rule, ".*from[\\(\\)]{0,2}=([0-9]+),.*");
     int from = Integer.MIN_VALUE;
     if (fromStr != null) {
       from = Integer.parseInt(fromStr);
     }
     int to = Integer.MAX_VALUE;
-    String toStr = pickup(rule, ".*to\\(\\)=([0-9]+),.*");
+    String toStr = pickup(rule, ".*to[\\(\\)]{0,2}=([0-9]+),.*");
     if (toStr != null) {
       to = Integer.parseInt(toStr);
     }
-    String defaultValue = pickup(rule, ".*defaultValue\\(\\)=([0-9]+).*");
+    String defaultValue = pickup(rule, ".*defaultValue[\\(\\)]{0,2}=([0-9]+).*");
     String criteria = parseCriteria(rule);
     return new IntValidate(from, to, defaultValue, criteria);
   }
@@ -119,7 +119,7 @@ public class RulesParser {
   }
 
   private static String parseCriteria(String rule) {
-    return pickup(rule, ".*ifParentValueIs\\(\\)=\"([a-zA-Z0-9_]+)\"");
+    return pickup(rule, ".*ifParentValueIs[\\(\\)]{0,2}=\"([a-zA-Z0-9_]+)\"");
   }
   private static String pickup(String ann, String patternStr) {
     Pattern pattern = Pattern.compile(patternStr);
