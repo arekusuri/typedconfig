@@ -11,7 +11,4 @@ public class SfConfig2 extends TypedConfig {
     super(prop);
   }
 
-  @Key("salesforce.fetchRetryLimit")@Default("5")
-  public int fetchRetryLimit;
-
 }

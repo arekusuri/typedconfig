@@ -33,6 +33,4 @@ public class SfConfig extends TypedConfig {
   @IntOptionalConfig(defaultValue = 5)
   public int fetchRetryLimit;
 
-
-
 }

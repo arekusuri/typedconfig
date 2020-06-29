@@ -20,7 +20,8 @@ import javax.lang.model.element.Element;
 import javax.lang.model.element.ExecutableElement;
 import javax.lang.model.element.TypeElement;
 import typedconfig.PropertyFileCheck;
-import typedconfig.dependencytree.RulesParser;
+import typedconfig.rule.RuleNode;
+import typedconfig.rule.RulesParser;
 
 
 abstract public class CheckerProcessorBase extends AbstractProcessor {
