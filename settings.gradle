@@ -10,6 +10,9 @@
 rootProject.name = 'typedconfig'
 
 include "typedconfig-core"
-include "typedconfig-sample-2level-mw"
-include "typedconfig-sample-2level-testapp"
-include "typedconfig-sample-1level-testapp"
+include "sample1-testapp"
+include "sample2-middleware"
+include "sample2-testapp"
+include "sample3-core-extend"
+include "sample3-middleware"
+include "sample3-testapp"

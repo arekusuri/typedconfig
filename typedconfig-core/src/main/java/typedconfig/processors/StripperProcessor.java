@@ -18,10 +18,11 @@ import javax.lang.model.element.AnnotationMirror;
 import javax.lang.model.element.Element;
 import javax.lang.model.element.TypeElement;
 import javax.tools.JavaFileObject;
+import typedconfig.ConfigClass;
 import typedconfig.Key;
 
 
-@SupportedAnnotationTypes({"typedconfig.Key", "typedconfig.PropertyFileCheck"})
+@SupportedAnnotationTypes({"typedconfig.ConfigClass", "typedconfig.Key", "typedconfig.PropertyFileCheck"})
 public class StripperProcessor extends AbstractProcessor {
   private String stripInfofileName = "annotation-output.txt";
   private String stripInfoFileFullPathfile;
@@ -42,7 +43,53 @@ public class StripperProcessor extends AbstractProcessor {
     }
   }
 
-  private void generateProcessorClass() {
+  @Override
+  public boolean process(Set<? extends TypeElement> annotations, RoundEnvironment env) {
+    if (annotations.size() == 0) {
+      return false;
+    }
+    processEnhanceConfigClass(annotations, env);
+    List<String> text = new ArrayList<>();
+    for (Element annotatedElement : env.getElementsAnnotatedWith(Key.class)) {
+      StringBuilder rule = new StringBuilder(annotatedElement.getEnclosingElement().getSimpleName().toString() + ":");
+      for (AnnotationMirror annotationMirror : annotatedElement.getAnnotationMirrors()) {
+        String annotationName = annotationMirror.getAnnotationType().toString();
+        Map values = annotationMirror.getElementValues();
+        rule.append(annotationName + "=");
+        rule.append(values.entrySet().toString() + ";");
+      }
+      text.add(rule.toString());
+    }
+
+    this.writeRuleFile(text);
+    this.generateChecker();
+    return true;
+  }
+
+  public boolean processEnhanceConfigClass(Set<? extends TypeElement> annoations, RoundEnvironment env) {
+    for (Element annotatedElement : env.getElementsAnnotatedWith(ConfigClass.class)) {
+
+    }
+    return true;
+  }
+
+  protected void writeRuleFile(List<String> text) {
+    try {
+      System.out.println("Info - generated annotation info file: ");
+      System.out.println(stripInfoFileFullPathfile);
+      File file = new File(stripInfoFileFullPathfile);
+      Writer w = new OutputStreamWriter(new FileOutputStream(file), "UTF-8");
+      PrintWriter pw = new PrintWriter(w);
+      for (String line : text) {
+        pw.println(line + "\n");
+      }
+      pw.close();
+    } catch (IOException e) {
+      throw new RuntimeException(e);
+    }
+  }
+
+  protected void generateChecker() {
     String classTemplate = "import javax.annotation.processing.SupportedAnnotationTypes;\n"
         + "import typedconfig.processors.CheckerProcessorBase;\n"
         + "@SupportedAnnotationTypes({\"typedconfig.PropertyFileCheck\"})\n"
@@ -63,41 +110,4 @@ public class StripperProcessor extends AbstractProcessor {
     }
   }
 
-  @Override
-  public boolean process(Set<? extends TypeElement> annoations, RoundEnvironment env) {
-    if (annoations.size() == 0) {
-      return false;
-    }
-    List<String> text = new ArrayList<>();
-    for (Element annotatedElement : env.getElementsAnnotatedWith(Key.class)) {
-      StringBuilder rule = new StringBuilder(annotatedElement.getEnclosingElement().getSimpleName().toString() + ":");
-      for (AnnotationMirror annotationMirror : annotatedElement.getAnnotationMirrors()) {
-        String annotationName = annotationMirror.getAnnotationType().toString();
-        Map values = annotationMirror.getElementValues();
-        rule.append(annotationName + "=");
-        rule.append(values.entrySet().toString() + ";");
-      }
-      text.add(rule.toString());
-    }
-
-    this.writeAnnotationInfoToFile(text);
-    this.generateProcessorClass();
-    return true;
-  }
-
-  private void writeAnnotationInfoToFile(List<String> text) {
-    try {
-      System.out.println("Info - generated annotation info file: ");
-      System.out.println(stripInfoFileFullPathfile);
-      File file = new File(stripInfoFileFullPathfile);
-      Writer w = new OutputStreamWriter(new FileOutputStream(file), "UTF-8");
-      PrintWriter pw = new PrintWriter(w);
-      for (String line : text) {
-        pw.println(line + "\n");
-      }
-      pw.close();
-    } catch (IOException e) {
-      throw new RuntimeException(e);
-    }
-  }
 }

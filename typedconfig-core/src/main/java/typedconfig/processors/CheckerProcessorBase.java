@@ -19,8 +19,7 @@ import javax.lang.model.element.AnnotationValue;
 import javax.lang.model.element.Element;
 import javax.lang.model.element.ExecutableElement;
 import javax.lang.model.element.TypeElement;
-import typedconfig.PropertyFileCheck;
-import typedconfig.rule.RuleNode;
+import typedconfig.ConfigFolder;
 import typedconfig.rule.RulesParser;
 
 
@@ -30,7 +29,7 @@ abstract public class CheckerProcessorBase extends AbstractProcessor {
     if (annoations.size() == 0) {
       return false;
     }
-    Set<? extends Element> elementSet = env.getElementsAnnotatedWith(PropertyFileCheck.class);
+    Set<? extends Element> elementSet = env.getElementsAnnotatedWith(ConfigFolder.class);
     Element annotatedElement = elementSet.iterator().next();
 
     AnnotationMirror annotationMirror = annotatedElement.getAnnotationMirrors().iterator().next();

@@ -1,0 +1,2 @@
+sf.partition.mode=CLIENT
+source.class="SfSource"
