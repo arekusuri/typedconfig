@@ -1,13 +1,16 @@
 package com.na.mw;
 
+import com.na.extend.FooStripperProcessor;
 import java.util.Properties;
+import typedconfig.ConfigClass;
 import typedconfig.Parent;
 import typedconfig.Key;
 import typedconfig.TypedConfig;
 import typedconfig.constraints.EnumExplicitConfig;
 import typedconfig.constraints.StringExplicitConfig;
+import typedconfig.processors.StripperProcessor;
 
-
+@ConfigClass(processor = FooStripperProcessor.class)
 public class DilConfig extends TypedConfig {
   public DilConfig(Properties prop) {
     super(prop);

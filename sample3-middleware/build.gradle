@@ -25,7 +25,8 @@ sourceCompatibility = 1.8
 
 dependencies {
     compile project(":typedconfig-core")
-    annotationProcessor project(':typedconfig-core')
+    implementation project(":sample3-core-extend")
+    annotationProcessor project(':sample3-core-extend')
 }
 
 

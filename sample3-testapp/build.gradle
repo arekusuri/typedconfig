@@ -23,7 +23,7 @@ sourceCompatibility = 1.8
 dependencies {
     sourceSets { main.resources.srcDirs = ['config'] } // tell the config dir is resource
     compile project(":typedconfig-core")
-    annotationProcessor project(':typedconfig-core')
+    annotationProcessor project(':sample3-middleware')
 }
 
 
