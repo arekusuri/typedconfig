@@ -29,7 +29,7 @@ import typedconfig.constraints.annotationcontainers.StringExplicitConfigContaine
 @Retention(RetentionPolicy.RUNTIME)
 @Repeatable(StringExplicitConfigContainer.class)
 public @interface StringExplicitConfig {
-  String ifParentValueIs() default "";
+  String[] ifParentValueIs() default "";
   String regex() default ".*";
 }
 

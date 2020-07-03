@@ -11,7 +11,7 @@ import javax.lang.model.element.Element;
 import typedconfig.processors.StripperProcessor;
 
 
-@SupportedAnnotationTypes({"typedconfig.Key", "typedconfig.PropertyFileCheck"})
+@SupportedAnnotationTypes({"typedconfig.Key", "typedconfig.ConfigFodler"})
 public class FooStripperProcessor extends StripperProcessor {
   @Override
   protected void outputRule(Set<? extends Element > elements, String outputFile) {
@@ -27,7 +27,7 @@ public class FooStripperProcessor extends StripperProcessor {
       }
 //      list.add(rule.toString());
     }
-    System.out.println("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$ foo stripper processor");
+    System.out.println("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$ " + elements);
 //    writeFile(text);
   }
 }

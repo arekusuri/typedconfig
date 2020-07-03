@@ -1,5 +1,6 @@
 package typedconfig.processors;
 
+import com.sun.tools.javac.processing.JavacProcessingEnvironment;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;

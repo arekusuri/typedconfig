@@ -42,7 +42,7 @@ public class StripperProcessor extends AbstractProcessor {
       JavaFileObject javaFileObjectProcessor = processingEnv.getFiler().createSourceFile(generatedProcessClassName);
       String fileName = generatedProcessClassName + ".java";
       String outputFile = javaFileObjectProcessor.getName().replace(fileName, stripInfofileName);
-      this.processEnhanceConfigClass(annotations, env);
+//      this.processEnhanceConfigClass(annotations, env);
       Set<? extends Element> elements = env.getElementsAnnotatedWith(Key.class);
       this.outputRule(elements, outputFile);
       this.generateChecker(outputFile, javaFileObjectProcessor);
@@ -67,11 +67,10 @@ public class StripperProcessor extends AbstractProcessor {
     return false;
   }
 
-  public boolean processEnhanceConfigClass(Set<? extends TypeElement> annotations, RoundEnvironment env) {
-    for (Element annotatedElement : env.getElementsAnnotatedWith(ConfigClass.class)) {
-
-    }
-    return true;
+  public void processEnhanceConfigClass(Set<? extends TypeElement> annotations, RoundEnvironment env) {
+    // modify an existing class is not allowed usually.
+    // lombok used some non public api to add method for classes.
+    // let's keep the old way - client config file need to extend TypedConfig class
   }
 
   protected void outputRule(Set<? extends Element> elements, String outputFile) {
@@ -108,7 +107,7 @@ public class StripperProcessor extends AbstractProcessor {
   protected void generateChecker(String outputFile, JavaFileObject javaFileObjectProcessor) {
     String classTemplate = "import javax.annotation.processing.SupportedAnnotationTypes;\n"
         + "import typedconfig.processors.CheckerProcessorBase;\n"
-        + "@SupportedAnnotationTypes({\"typedconfig.PropertyFileCheck\"})\n"
+        + "@SupportedAnnotationTypes({\"typedconfig.ConfigFolder\"})\n"
         + "public class CheckerProcessor extends CheckerProcessorBase{\n"
         + "  @Override\n"
         + "  protected String getAnnotationInfoFile() {\n"

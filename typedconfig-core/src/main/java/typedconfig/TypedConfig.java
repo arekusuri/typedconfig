@@ -10,6 +10,9 @@ import org.apache.commons.beanutils.ConvertUtilsBean;
 
 
 public class TypedConfig {
+  static public void build() {
+
+  }
 
   public TypedConfig(Properties prop) {
     if (prop != null) {
